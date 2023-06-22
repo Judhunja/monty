@@ -1,12 +1,5 @@
 #include "monty.h"
-#include <string.h>
-#include <stdarg.h>
-#include <stdlib.h>
-#include <stddef.h>
-#include <sys/types.h>
-#include <ctype.h>
-
-/**
+/** 
  * push - pushes an element to the top of the stack
  * @top: top of the stack
  * @line_no: line no where the command is found
@@ -72,6 +65,7 @@ void exec_comm(char *command, char *value, stack_t **top, unsigned int line_no)
                         return;
                 }
         }
+
         fprintf(stderr, "L%u: unknown instruction %s\n",
 line_no, command);
         exit(EXIT_FAILURE);
@@ -87,6 +81,7 @@ int main(int argc, char *argv[])
 	char *command;
 	stack_t *top = NULL;
 	char *value = NULL;
+	char *trimmed;
 
 	if (argc != 2)
 	{
@@ -102,17 +97,31 @@ int main(int argc, char *argv[])
 
         while ((lineread = getline(&line, &line_len, f_file)) != -1)
         {
-                line[strcspn(line, "\n")] = '\0';
+		if (is_line_empty(line))
+		{
+			line_no++;
+			continue;
+		}
+		trimmed = line;
+		while (isspace(*trimmed))
+			trimmed++;
 
-                command = strtok(line, " ");
-                value = strtok(NULL, " ");
 
+		if (trimmed[0] == '#')
+		{
+			line_no++;
+			continue;
+		}
 
-                if (command == NULL)
-                {
-                        fprintf(stderr, "L%u: unknown instruction %s\n", line_no, command);
-                        exit(EXIT_FAILURE);
-                }
+                command = strtok(trimmed, " ");
+		value = strtok(NULL, " ");
+
+		if (command == NULL)
+		{
+			fprintf(stderr, "L%u: unknown instruction %s\n", line_no, command);
+			exit(EXIT_FAILURE);
+		}
+	
 		exec_comm(command, value, &top, line_no);
 		line_no++;
 	}

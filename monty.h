@@ -3,6 +3,8 @@
 #define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
 #include <stddef.h>
 #include <sys/types.h>
 #include <ctype.h>
@@ -40,4 +42,5 @@ void push(stack_t **top, unsigned int line_no, char *value);
 void exec_comm(char *command, char *value, stack_t **top, unsigned int line_no);
 void pall(stack_t **top, unsigned int line_no, char *value);
 void free_stack(stack_t **top);
+int is_line_empty(char *line);
 #endif
