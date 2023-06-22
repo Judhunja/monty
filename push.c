@@ -57,6 +57,8 @@ void exec_comm(char *command, char *value, stack_t **top, unsigned int line_no)
 
         int i;
 
+	if (strlen(command) == 0 || command[0] == '#')
+		return;
         for (i = 0; comm_array[i].opcode != NULL; i++)
         {
                 if (strcmp(comm_array[i].opcode, command) == 0)
