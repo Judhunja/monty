@@ -42,5 +42,9 @@ void push(stack_t **top, unsigned int line_no, char *value);
 void exec_comm(char *command, char *value, stack_t **top, unsigned int line_no);
 void pall(stack_t **top, unsigned int line_no, char *value);
 void free_stack(stack_t **top);
+void pop(stack_t **top, unsigned int line_no, char *value);
+void pint(stack_t **top, unsigned int line_no, char *value);
+void swap(stack_t **top, unsigned int line_no, char *value);
 int is_line_empty(char *line);
+char *trim(char *str);
 #endif

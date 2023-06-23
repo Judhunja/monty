@@ -49,19 +49,28 @@ void push(stack_t **top, unsigned int line_no, char *value)
 
 void exec_comm(char *command, char *value, stack_t **top, unsigned int line_no)
 {
+	char *actual_command;
 	instruction_t comm_array[] = {
 		{"push", &push},
 		{"pall", &pall},
+		{"pop", &pop},
+		{"pint", &pint},
+		{"swap", &swap},
 		{NULL, NULL}
 	};
 
         int i;
 
+	while (isspace(*command))
+		command++;
+
 	if (strlen(command) == 0 || command[0] == '#')
 		return;
+
+	actual_command = strtok(command, " ");
         for (i = 0; comm_array[i].opcode != NULL; i++)
         {
-                if (strcmp(comm_array[i].opcode, command) == 0)
+                if (strcmp(comm_array[i].opcode, actual_command) == 0)
                 {
                         comm_array[i].f(top, line_no, value);
                         return;
@@ -98,18 +107,15 @@ int main(int argc, char *argv[])
 	}
 
         while ((lineread = getline(&line, &line_len, f_file)) != -1)
-        {
-		if (is_line_empty(line))
-		{
-			line_no++;
-			continue;
-		}
+	{
+		line[strcspn(line, "\n")] = '\0';
+
 		trimmed = line;
 		while (isspace(*trimmed))
 			trimmed++;
 
 
-		if (trimmed[0] == '#')
+		if (trimmed[0] == '#' || *trimmed == '\0')
 		{
 			line_no++;
 			continue;
