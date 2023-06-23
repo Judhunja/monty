@@ -46,6 +46,7 @@ void pop(stack_t **top, unsigned int line_no, char *value);
 void pint(stack_t **top, unsigned int line_no, char *value);
 void swap(stack_t **top, unsigned int line_no, char *value);
 void add(stack_t **top, unsigned int line_no, char *value);
+void nop(stack_t **top, unsigned int line_no, char *value);
 int is_line_empty(char *line);
 char *trim(char *str);
 #endif
