@@ -58,6 +58,7 @@ void exec_comm(char *command, char *value, stack_t **top, unsigned int line_no)
 		{"swap", &swap},
 		{"add", &add},
 		{"nop", &nop},
+		{"sub", &sub},
 		{NULL, NULL}
 	};
 
